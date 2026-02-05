@@ -1,33 +1,27 @@
-# 📸 Dossier des captures d'écran
+# 📸 Captures d'écran - PoissyShop
 
-Pour ajouter des captures d'écran à votre projet :
+> **Statut** : ✅ Intégrées au README principal
 
-1. **Dashboard** (`dashboard.png`) : Vue d'ensemble avec statistiques et graphiques
-2. **Produits** (`products.png`) : Gestion du catalogue de produits
-3. **Ventes** (`sales.png`) : Interface d'enregistrement des ventes
-4. **Stock** (`stock.png`) : Suivi du stock avec alertes
-5. **Vendeurs** (`vendors.png`) : Gestion des vendeurs
-6. **Connexion** (`login.png`) : Page d'authentification
+Les captures d'écran suivantes sont maintenant intégrées dans le fichier [`README.md`](../README.md) à la section "Aperçus de l'Application".
 
-## 📌 Recommandations
+## 📁 Fichiers disponibles
 
-- **Format** : PNG ou JPG
-- **Dimensions** : 1920x1080px (fullscreen) ou 800x600px (zone visible)
-- **Compression** : Qualité 80-90% pour optimiser le poids
-- **Naming** : Utiliser des noms explicatifs en minuscules avec des tirets
+| Fichier | Description |
+|---------|-------------|
+| [`login.png`](login.png) | Page de connexion |
+| [`dashboard.png`](dashboard.png) | Dashboard principal avec analytics |
+| [`products.png`](products.png) | Gestion des produits |
+| [`sales.png`](sales.png) | Interface des ventes |
+| [`stock.png`](stock.png) | Gestion du stock |
+| [`vendors.png`](vendors.png) | Gestion des vendeurs |
+| [`dashboard-ventes-recentes.png`](dashboard-ventes-recentes.png) | Section ventes récentes du dashboard |
 
-## 🛠️ Outils recommandés
+## 📝 Notes
 
-- **macOS** : `Shift + Cmd + 4` (capture) ou CleanShot X
-- **Linux** : `gnome-screenshot` ou Flameshot
-- **Windows** : `Win + Shift + S` ou ShareX
-- **通用** : Duplicati, Shots.so, Ray.so (pour des美化)
+- **Format** : PNG haute qualité
+- **Dimensions** : 1920×1080px (fullscreen)
+- **Style** : Cohérent avec le design system de l'application
 
-## 📝 Mise à jour du README
-
-Une fois les captures ajoutées, remplacez la section "Aperçus" dans le README.md avec des liens Markdown :
-
-```markdown
-![Dashboard](screenshots/dashboard.png)
-![Produits](screenshots/products.png)
-```
+Pour mettre à jour les captures :
+1. Remplacer les fichiers dans ce dossier
+2. Les modifications seront automatiquement reflétées dans le README

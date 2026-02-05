@@ -353,77 +353,74 @@ Products (1) ──< (N) Sales
 
 ---
 
-## 📸 Captures d'écran recommandées
+## 📸 Aperçus de l'Application
 
-Voici les **6 captures d'écran** à réaliser pour valoriser votre projet auprès des recruteurs :
+<div align="center">
 
-### 🔐 1. Page de connexion (`login.png`)
-> **Objectif** : Montrer le système d'authentification
->
-> **Éléments à capturer** :
-> - Formulaire de connexion avec champs username/password
-> - Design épuré et professionnel
-> - Logo de l'application
+### 🔐 Page de Connexion
 
-### 📊 2. Dashboard principal (`dashboard.png`) — ⭐ ESSENTIEL
-> **Objectif** : Impact visuel immédiat — démontre les capacités d'analytics
->
-> **Éléments à capturer** :
-> - 3 cartes statistiques (ventes du jour, valeur stock, vendeurs actifs)
-> - Graphique des revenus (courbe sur 7 jours)
-> - Top 5 des produits les plus vendus
-> - Alertes de stock faible
-> - Recent ventes avec détails
+![Page de connexion - PoissyShop](screenshots/login.png)
 
-### 🐟 3. Catalogue produits (`products.png`) — ⭐ ESSENTIEL
-> **Objectif** : Présenter le CRUD et la gestion du catalogue
->
-> **Éléments à capturer** :
-> - Tableau avec images des produits
-> - Catégories, prix au kg, stock disponible
-> - Boutons Edit/Delete pour l'admin
-> - Filtres ou barre de recherche
-
-### 💰 4. Interface des ventes (`sales.png`) — ⭐ ESSENTIEL
-> **Objectif** : Montrer le processus de vente et le calcul automatique
->
-> **Éléments à capturer** :
-> - Formulaire de création de vente (produit + poids)
-> - Prix calculé automatiquement
-> - Liste des ventes récentes
-> - Total CA du jour
-
-### 📦 5. Gestion du stock (`stock.png`)
-> **Objectif** : Valoriser la gestion du stock en temps réel
->
-> **Éléments à capturer** :
-> - Tableau du stock avec quantitiés
-> - Indicateurs visuels (vert/orange/rouge)
-> - Alertes de stock bas (< 10 kg)
-> - Valeur totale du stock
-
-### 👥 6. Gestion des vendeurs (`vendors.png`)
-> **Objectif** : Présenter la gestion des utilisateurs RBAC
->
-> **Éléments à capturer** :
-> - Liste des vendeurs avec rôles
-> - Statistiques individuelles (CA, nombre de ventes)
-> - Bouton d'ajout de vendeur
+Système d'authentification sécurisé avec design moderne et épuré.
 
 ---
 
-### 📐 Spécifications techniques
+### 📊 Dashboard Principal
 
-| Paramètre | Valeur recommandée |
-|-----------|---------------------|
-| **Format** | PNG ou JPG |
-| **Dimensions** | 1920×1080px (fullscreen) ou 1200×800px (zone visible) |
-| **Compression** | Qualité 80-90% |
-| **Naming** | Minuscules avec tirets (`dashboard.png`, `products.png`) |
+![Dashboard - PoissyShop](screenshots/dashboard.png)
+![Dashboard - PoissyShop](screenshots/dashboard-ventes-recentes-et-alert-stock.png)
+
+
+Tableau de bord analytique avec statistiques en temps réel, graphiques interactifs et alertes de stock.
 
 ---
 
-## 🔮 Évolutions futures
+### 🐟 Gestion des Produits
+
+![Produits - PoissyShop](screenshots/products.png)
+
+Catalogue complet avec images, catégories, prix au kg et gestion du stock.
+
+---
+
+### 💰 Gestion des Ventes
+
+![Ventes - PoissyShop](screenshots/sales.png)
+
+Interface d'enregistrement des ventes avec calcul automatique et historique complet.
+
+---
+
+### 📦 Gestion du Stock
+
+![Stock - PoissyShop](screenshots/stock.png)
+
+Suivi du stock en temps réel avec alertes intelligentes et valorisation.
+
+---
+
+### 👥 Gestion des Vendeurs
+
+![Vendeurs - PoissyShop](screenshots/vendors.png)
+
+Administration des vendeurs avec statistiques individuelles et gestion des rôles.
+
+</div>
+
+---
+
+### 🎯 Fonctionnalités Clés en Images
+
+| Module | Capture | Description |
+|--------|---------|-------------|
+| **Dashboard** | ![Dashboard](screenshots/dashboard.png) | Vue d'ensemble avec KPIs, graphiques CA et top produits |
+| **Produits** | ![Produits](screenshots/products.png) | CRUD complet avec images et catégories |
+| **Ventes** | ![Ventes](screenshots/sales.png) | Enregistrement rapide et historique |
+| **Stock** | ![Stock](screenshots/stock.png) | Suivi temps réel et alertes |
+
+---
+
+## 🔮 Évolutions Futures
 
 ### Priorité haute
 
