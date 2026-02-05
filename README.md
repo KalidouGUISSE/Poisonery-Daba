@@ -1,11 +1,13 @@
 # 🐟 PoissyShop — Application de Gestion de Poissonnerie
 
-> **Application web fullstack pour la gestion opérationnelle d'une poissonnerie** — desarrollada avec Next.js 15, TypeScript et React.
+> **Application web fullstack pour la gestion opérationnelle d'une poissonnerie** — développée avec Next.js 15, TypeScript et React.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=flat-square&logo=react)](https://react.dev/)
+[![Zustand](https://img.shields.io/badge/Zustand-4.5-3178C6?style=flat-square)](https://zustand-demo.pmnd.rs/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-0.x-black?style=flat-square)](https://ui.shadcn.com/)
 
 ---
 
@@ -15,12 +17,12 @@
 2. [Stack technique](#stack-technique)
 3. [Architecture du projet](#architecture-du-projet)
 4. [Fonctionnalités](#fonctionnalités)
-5. [Installation et démarrage](#installation-et-démarrage)
-6. [Données de test](#données-de-test)
-7. [Structure des données](#structure-des-données)
-8. [Points forts pour les recruteurs](#points-forts-pour-les-recruteurs)
-9. [Captures d'écran recommandées](#-captures-décran-recommandées)
-10. [Évolutions futures](#-évolutions-futures)
+5. [Captures d'écran](#captures-décran)
+6. [Installation et démarrage](#installation-et-démarrage)
+7. [Données de test](#données-de-test)
+8. [Structure des données](#structure-des-données)
+9. [Compétences techniques](#compétences-techniques)
+10. [Évolutions futures](#évolutions-futures)
 11. [Licence](#licence)
 
 ---
@@ -44,18 +46,18 @@ L'application a été conçue avec une approche **modulaire et extensible**, fav
 
 ### Frontend
 
-| Technologie | Rôle |
-|-------------|------|
-| **Next.js 15** | Framework React avec App Router, Server Components et streaming |
-| **TypeScript 5** | Typage statique pour la sécurité et l'autocomplétion |
-| **Tailwind CSS 3.4** | Framework CSS utilitaire pour un design responsive rapide |
-| **shadcn/ui** | Composants UI accessibles et personnalisables |
-| **React 18** | Bibliothèque UI avec Concurrent Features |
-| **Zustand** | Gestion d'état légère et performante |
-| **React Hook Form** | Gestion et validation des formulaires |
-| **date-fns** | Manipulation de dates côté client |
-| **Recharts** | Visualisation des données avec graphiques interactifs |
-| **Lucide React** | Icônes modernes et cohérentes |
+| Technologie | Version | Rôle |
+|-------------|---------|------|
+| **Next.js** | 15 | Framework React avec App Router, Server Components et streaming |
+| **React** | 18 | Bibliothèque UI avec Concurrent Features |
+| **TypeScript** | 5.x | Typage statique pour la sécurité et l'autocomplétion |
+| **Tailwind CSS** | 3.4 | Framework CSS utilitaire pour un design responsive rapide |
+| **shadcn/ui** | Latest | Composants UI accessibles et personnalisables |
+| **Zustand** | 4.5 | Gestion d'état légère et performante |
+| **React Hook Form** | Latest | Gestion et validation des formulaires |
+| **date-fns** | Latest | Manipulation de dates côté client |
+| **Recharts** | Latest | Visualisation des données avec graphiques interactifs |
+| **Lucide React** | Latest | Icônes modernes et cohérentes |
 
 ### Backend & API
 
@@ -72,6 +74,7 @@ L'application a été conçue avec une approche **modulaire et extensible**, fav
 | **ESLint** | Analyse statique du code |
 | **PostCSS** | Traitement CSS avancé |
 | **Turbopack** | Bundler ultra-rapide pour le développement |
+| **Git** | Contrôle de version |
 
 ---
 
@@ -113,8 +116,9 @@ Poissonnerie/
 ├── data/                      # Données mockées
 │   └── data.json              # Seed data complète
 ├── public/                    # Assets statiques
-└── styles/
-    └── globals.css            # Styles globaux
+├── styles/
+│   └── globals.css            # Styles globaux
+└── DESIGN.md                  # Documentation du design system
 ```
 
 ### Patterns architecturaux
@@ -150,24 +154,11 @@ Poissonnerie/
 
 ### 2. Dashboard Analytique
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  💰 Ventes du jour    📦 Valeur stock    👥 Vendeurs actifs │
-│      116 650 F CFA         382 500 F CFA           2        │
-├─────────────────────────────────────────────────────────────┤
-│  📈 Graphique CA (7 derniers jours)                          │
-│  ┌─────────────────────────────────────────┐               │
-│  │    ████                                  │               │
-│  │    ████  ████                            │               │
-│  │    ████  ████  ████                      │               │
-│  │    ████  ████  ████  ████                │               │
-│  └─────────────────────────────────────────┘               │
-├─────────────────────────────────────────────────────────────┤
-│  🐠 Top produits        │  🔔 Alertes stock (< 10 units)   │
-│  • Thiof (45%)          │  ⚠️ Crevettes: 5 kg              │
-│  • Dorade (30%)         │  ⚠️ Saumon: 3 kg                 │
-└─────────────────────────────────────────────────────────────┘
-```
+- **KPIs en temps réel** : Ventes du jour, de la semaine, du mois
+- **Graphiques interactifs** : Évolution du CA sur 7 jours avec Recharts
+- **Top produits** : Classement par quantité vendus
+- **Alertes stock** : Notifications pour stock faible
+- **Ventes récentes** : Historique des dernières transactions
 
 ### 3. Gestion des Produits
 
@@ -196,6 +187,64 @@ Poissonnerie/
 - **CRD complet** : Création, lecture, suppression
 - **Stats individuelles** : CA généré, nombre de ventes
 - **Validation** : Données vérifiées avant insertion
+
+---
+
+## 📸 Captures d'écran
+
+### 🔐 Page de Connexion
+
+![Page de connexion - PoissyShop](screenshots/login.png)
+
+Système d'authentification sécurisé avec design moderne et épuré.
+
+---
+
+### 📊 Dashboard Principal
+
+![Dashboard - PoissyShop](screenshots/dashboard.png)
+
+Tableau de bord analytique avec statistiques en temps réel, graphiques interactifs et alertes de stock.
+
+---
+
+### 📈 Détail du Dashboard
+
+![Ventes récentes et alertes stock](screenshots/dashboard-ventes-recentes-et-alert-stock.png)
+
+Section ventes récentes et alertes de stock faible.
+
+---
+
+### 🐟 Gestion des Produits
+
+![Gestion des produits](screenshots/products.png)
+
+Catalogue complet avec images, catégories, prix au kg et gestion du stock.
+
+---
+
+### 💰 Gestion des Ventes
+
+![Gestion des ventes](screenshots/sales.png)
+
+Interface d'enregistrement des ventes avec calcul automatique et historique complet.
+
+---
+
+### 📦 Gestion du Stock
+
+![Gestion du stock](screenshots/stock.png)
+
+Suivi du stock en temps réel avec alertes intelligentes et valorisation.
+
+---
+
+### 👥 Gestion des Vendeurs
+
+![Gestion des vendeurs](screenshots/vendors.png)
+
+Administration des vendeurs avec statistiques individuelles et gestion des rôles.
 
 ---
 
@@ -310,120 +359,95 @@ Products (1) ──< (N) Sales
 
 ---
 
-## 💼 Points forts pour les recruteurs
+## 💼 Compétences techniques
 
-### 🔧 Compétences techniques démontrées
+### 🔧 Frontend
 
-| Domaine | Technologies | Niveau |
-|---------|--------------|--------|
-| **Frontend** | Next.js 15, React 18, TypeScript | Intermédiaire-avancé |
-| **Styling** | Tailwind CSS, shadcn/ui | Intermédiaire |
-| **State Management** | Zustand | Intermédiaire |
-| **Forms** | React Hook Form, Zod | Intermédiaire |
-| **Visualisation** | Recharts | Intermédiaire |
-| **Build Tools** | ESLint, PostCSS | Intermédiaire |
+| Compétence | Niveau | Technologies |
+|------------|--------|--------------|
+| **Framework React** | Intermédiaire-avancé | Next.js 15, React 18 |
+| **TypeScript** | Intermédiaire-avancé | Typage strict, Generics |
+| **CSS Framework** | Intermédiaire | Tailwind CSS 3.4, shadcn/ui |
+| **State Management** | Intermédiaire | Zustand |
+| **Forms** | Intermédiaire | React Hook Form, Zod |
+| **Data Visualization** | Intermédiaire | Recharts |
+| **Date Handling** | Intermédiaire | date-fns |
 
-### 🧠 Compétences transversales
+### 🧠 Backend & API
 
-✅ **Architecture propre** : Découpage logique en dossiers, composants réutilisables
+| Compétence | Niveau | Technologies |
+|------------|--------|--------------|
+| **API REST** | Intermédiaire | Next.js API Routes |
+| **Node.js** | Intermédiaire | Runtime JavaScript |
+| **Authentication** | Intermédiaire | JWT, Sessions |
 
-✅ **Typage TypeScript** : Utilisation intensive des types pour la sécurité du code
+### 🛠️ Outils & Pratiques
 
-✅ **Responsive Design** : Interface adaptative mobile/desktop
-
-✅ **Accessibilité** : Composants shadcn/ui accessibles par défaut
-
-✅ **Bonnes pratiques** : Validation des formulaires, gestion d'erreurs
-
-✅ **Documentation** : README complet, code commenté
-
-✅ **Versioning Git** : Commits structurés (conventional commits)
-
-✅ **Extensibilité** : Code préparé pour l'ajout de fonctionnalités
+| Compétence | Niveau | Technologies |
+|------------|--------|--------------|
+| **Git** | Intermédiaire | Versioning, branches |
+| **Lint & Format** | Intermédiaire | ESLint |
+| **Testing** | Débutant | Jest, React Testing Library |
+| **CI/CD** | Débutant | GitHub Actions |
 
 ### 📈 Métriques du projet
 
 | Métrique | Valeur |
 |----------|--------|
-| **Lignes de code** | ~3 000+ |
-| **Composants** | 30+ |
+| **Lignes de code** | ~3 500+ |
+| **Composants** | 35+ |
 | **Pages** | 8 |
 | **API Routes** | 5 |
-| **Couverture tests** | À implémenter |
+| **Hooks personnalisés** | 5+ |
 
 ---
 
-## 📸 Aperçus de l'Application
-
-<div align="center">
-
-### 🔐 Page de Connexion
-
-![Page de connexion - PoissyShop](screenshots/login.png)
-
-Système d'authentification sécurisé avec design moderne et épuré.
-
----
-
-### 📊 Dashboard Principal
-
-![Dashboard - PoissyShop](screenshots/dashboard.png)
-![Dashboard - PoissyShop](screenshots/dashboard-ventes-recentes-et-alert-stock.png)
-
-
-Tableau de bord analytique avec statistiques en temps réel, graphiques interactifs et alertes de stock.
-
----
-
-### 🐟 Gestion des Produits
-
-![Produits - PoissyShop](screenshots/products.png)
-
-Catalogue complet avec images, catégories, prix au kg et gestion du stock.
-
----
-
-### 💰 Gestion des Ventes
-
-![Ventes - PoissyShop](screenshots/sales.png)
-
-Interface d'enregistrement des ventes avec calcul automatique et historique complet.
-
----
-
-### 📦 Gestion du Stock
-
-![Stock - PoissyShop](screenshots/stock.png)
-
-Suivi du stock en temps réel avec alertes intelligentes et valorisation.
-
----
-
-### 👥 Gestion des Vendeurs
-
-![Vendeurs - PoissyShop](screenshots/vendors.png)
-
-Administration des vendeurs avec statistiques individuelles et gestion des rôles.
-
-</div>
-
----
-
-### 🎯 Fonctionnalités Clés en Images
-
-| Module | Capture | Description |
-|--------|---------|-------------|
-| **Dashboard** | ![Dashboard](screenshots/dashboard.png) | Vue d'ensemble avec KPIs, graphiques CA et top produits |
-| **Produits** | ![Produits](screenshots/products.png) | CRUD complet avec images et catégories |
-| **Ventes** | ![Ventes](screenshots/sales.png) | Enregistrement rapide et historique |
-| **Stock** | ![Stock](screenshots/stock.png) | Suivi temps réel et alertes |
-
----
-
-## 🔮 Évolutions Futures
+## 🔮 Évolutions futures
 
 ### Priorité haute
 
 - [ ] **Base de données** : Migration vers PostgreSQL/Supabase
 - [ ] **API REST/GraphQL** : Backend dédié (NestJS/Express)
 - [ ] **Tests unitaires** : Jest + React Testing Library
+- [ ] **CI/CD** : Pipeline GitHub Actions
+
+### Priorité moyenne
+
+- [ ] **Export PDF** : Rapports de ventes et stocks
+- [ ] **Notifications** : Alertes email/SMS pour stock bas
+- [ ] **Multi-magasin** : Support plusieurs points de vente
+- [ ] **Authentification JWT** : Sécurisation API
+
+### Priorité basse
+
+- [ ] **Application mobile** : React Native
+- [ ] **PWA** : Mode hors-ligne et installation
+- [ ] **IA** : Prédictions de ventes
+- [ ] **WhatsApp Business** : Commandes clients
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+---
+
+## 🙏 Remerciements
+
+- [Next.js](https://nextjs.org/) — Le framework React ultime
+- [shadcn/ui](https://ui.shadcn.com/) — Design system fantastique
+- [Tailwind CSS](https://tailwindcss.com/) — CSS sans douleur
+- [Zustand](https://zustand-demo.pmnd.rs/) — State management minimaliste
+
+---
+
+<div align="center">
+
+**Développé avec ❤️ pour moderniser la gestion des poissonneries**
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+
+</div>
