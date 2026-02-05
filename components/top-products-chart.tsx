@@ -37,61 +37,121 @@ export function TopProductsChart() {
     }))
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("fr-FR", { notation: "compact" }).format(price) + " FCFA"
+    return new Intl.NumberFormat("fr-FR", { notation: "compact" }).format(price) + " $"
   }
 
+  // Couleurs claires et vibrantes pour les produits de la mer
   const COLORS = [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-    "hsl(var(--chart-3))",
-    "hsl(var(--chart-4))",
-    "hsl(var(--chart-5))",
+    "#0891b2", // Cyan - Thiof
+    "#0d9488", // Teal - Dorade
+    "#0284c7", // Sky blue - Crevettes
+    "#0369a1", // Ocean blue - Saumon
+    "#075985", // Deep blue - Bar
   ]
 
+  // Couleurs plus claires pour les barres
+  const LIGHT_COLORS = [
+    "#22d3ee", // Cyan light
+    "#2dd4bf", // Teal light
+    "#38bdf8", // Sky light
+    "#7dd3fc", // Blue light
+    "#38bdf8", // Ocean light
+  ]
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload
+      return (
+        <div className="bg-card border border-border rounded-lg shadow-lg p-3">
+          <p className="font-semibold text-foreground">{data.nom}</p>
+          <p className="text-sm text-primary font-medium">{data.quantite} kg vendus</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Revenu: {formatPrice(data.revenue)}
+          </p>
+        </div>
+      )
+    }
+    return null
+  }
+
   return (
-    <Card className="border-border">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Trophy className="h-5 w-5" />
-          Top 5 des produits
+    <Card className="border-border/50 shadow-sm">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <div className="p-1.5 rounded-lg bg-primary/10">
+            <Trophy className="h-5 w-5 text-primary" />
+          </div>
+          <span>Top 5 des produits</span>
         </CardTitle>
-        <CardDescription>Produits les plus vendus par quantité</CardDescription>
+        <CardDescription>Produits les plus vendus par quantité (kg)</CardDescription>
       </CardHeader>
       <CardContent>
         {topProducts.length === 0 ? (
-          <div className="flex items-center justify-center h-[300px] text-muted-foreground">
-            Aucune vente enregistrée
+          <div className="flex items-center justify-center h-[280px] text-muted-foreground">
+            <div className="text-center">
+              <Trophy className="h-12 w-12 mx-auto mb-2 opacity-20" />
+              <p>Aucune vente enregistrée</p>
+            </div>
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={topProducts}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="nom" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <YAxis
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={topProducts} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={true} vertical={false} />
+              <XAxis
+                type="number"
                 stroke="hsl(var(--muted-foreground))"
                 fontSize={12}
-                label={{ value: "kg", angle: -90, position: "insideLeft" }}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                type="category"
+                dataKey="nom"
+                stroke="hsl(var(--muted-foreground))"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                width={80}
               />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-                labelStyle={{ color: "hsl(var(--foreground))" }}
-                formatter={(value: number, name: string) => {
-                  if (name === "quantite") return [value + " kg", "Quantité"]
-                  return [value, name]
-                }}
+                content={<CustomTooltip />}
+                cursor={{ fill: 'hsl(var(--muted))', opacity: 0.3 }}
               />
-              <Bar dataKey="quantite" radius={[8, 8, 0, 0]}>
+              <Bar
+                dataKey="quantite"
+                radius={[0, 8, 8, 0]}
+                barSize={32}
+              >
                 {topProducts.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                    style={{
+                      filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))',
+                    }}
+                  />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         )}
+
+        {/* Légende des couleurs */}
+        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/50">
+          {topProducts.map((product, index) => (
+            <div
+              key={product.nom}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 text-xs"
+            >
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+              />
+              <span className="font-medium">{product.nom}</span>
+              <span className="text-muted-foreground">{product.quantite}kg</span>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   )
