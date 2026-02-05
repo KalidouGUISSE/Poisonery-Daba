@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "created_at": "2025-10-09T22:36:16.436Z",
+    "created_at": "2026-02-05T16:02:24.043Z",
     "description": "Données de migration pour l'application de vente de poissons",
     "tables": [
       "users",
@@ -31,20 +31,20 @@
       "nom": "Thiof",
       "categorie": "Poisson frais",
       "prix_kg": 2500,
-      "quantite_stock": 30,
+      "quantite_stock": 1,
       "image": "/fresh-thiof-fish.jpg",
       "created_at": "2025-10-09T15:00:00.000Z",
-      "updated_at": "2025-10-09T15:00:00.000Z"
+      "updated_at": "2026-02-05T16:02:24.043Z"
     },
     {
       "id": 2,
       "nom": "Dorade",
       "categorie": "Poisson frais",
       "prix_kg": 3000,
-      "quantite_stock": 25,
+      "quantite_stock": 11,
       "image": "/fresh-sea-bream-fish.jpg",
       "created_at": "2025-10-09T15:00:00.000Z",
-      "updated_at": "2025-10-09T15:00:00.000Z"
+      "updated_at": "2026-02-05T16:01:27.046Z"
     },
     {
       "id": 3,
@@ -61,20 +61,10 @@
       "nom": "Saumon",
       "categorie": "Poisson congelé",
       "prix_kg": 5000,
-      "quantite_stock": 3,
+      "quantite_stock": 15,
       "image": "/frozen-salmon-fish.jpg",
       "created_at": "2025-10-09T15:00:00.000Z",
-      "updated_at": "2025-10-09T15:00:00.000Z"
-    },
-    {
-      "id": 5,
-      "nom": "Bar",
-      "categorie": "Poisson frais",
-      "prix_kg": 3500,
-      "quantite_stock": 20,
-      "image": "/fresh-thiof-fish.jpg",
-      "created_at": "2025-10-09T15:00:00.000Z",
-      "updated_at": "2025-10-09T15:00:00.000Z"
+      "updated_at": "2026-02-05T16:00:50.682Z"
     }
   ],
   "sales": [
@@ -143,12 +133,45 @@
       "vendeur_nom": "Administrateur",
       "id": 6,
       "created_at": "2025-10-09T18:33:17.232Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 2,
+      "prix_total": 6000,
+      "date_vente": "2026-02-05T15:25:39.731Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 7,
+      "created_at": "2026-02-05T15:25:40.619Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 12,
+      "prix_total": 36000,
+      "date_vente": "2026-02-05T16:01:26.377Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 8,
+      "created_at": "2026-02-05T16:01:26.844Z"
+    },
+    {
+      "produit_id": 1,
+      "produit_nom": "Thiof",
+      "poids_kg": 29,
+      "prix_total": 72500,
+      "date_vente": "2026-02-05T16:02:23.828Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 9,
+      "created_at": "2026-02-05T16:02:23.848Z"
     }
   ],
   "migration_info": {
     "total_users": 2,
-    "total_products": 5,
-    "total_sales": 6,
+    "total_products": 4,
+    "total_sales": 9,
     "estimated_migration_time": "2-3 minutes",
     "dependencies": [
       "Users table must be created first",

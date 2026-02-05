@@ -46,7 +46,7 @@ export function StockTable() {
       setRestockDialogOpen(false)
       setRestockQuantity("")
       setSelectedProductId(null)
-    } catch (error) {
+    } catch {
       toast({
         title: "Erreur",
         description: "Une erreur est survenue lors de la mise à jour",
@@ -68,10 +68,9 @@ export function StockTable() {
     } else if (quantity < 5) {
       return { label: "Stock faible", variant: "destructive" as const, color: "text-destructive" }
     } else if (quantity < 10) {
-      return { label: "Stock moyen", variant: "secondary" as const, color: "text-yellow-500" }
-    } else {
-      return { label: "Stock bon", variant: "secondary" as const, color: "text-green-500" }
+      return { label: "Stock moyen", variant: "secondary" as const, color: "text-warning" }
     }
+    return { label: "En stock", variant: "secondary" as const, color: "text-success" }
   }
 
   // Sort products by stock quantity (lowest first)
@@ -79,84 +78,110 @@ export function StockTable() {
 
   return (
     <>
-      <div className="rounded-lg border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-border hover:bg-transparent">
-              <TableHead className="w-[80px]">Image</TableHead>
-              <TableHead>Produit</TableHead>
-              <TableHead>Catégorie</TableHead>
-              <TableHead className="text-right">Stock actuel</TableHead>
-              <TableHead className="text-center">Statut</TableHead>
-              <TableHead className="text-right">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedProducts.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                  Aucun produit disponible
-                </TableCell>
+      <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-secondary/50 border-border hover:bg-transparent">
+                <TableHead className="w-[80px]">Image</TableHead>
+                <TableHead>Produit</TableHead>
+                <TableHead className="hidden md:table-cell">Catégorie</TableHead>
+                <TableHead className="text-right">Stock</TableHead>
+                <TableHead className="text-center hidden sm:table-cell">Statut</TableHead>
+                <TableHead className="text-right w-[140px]">Action</TableHead>
               </TableRow>
-            ) : (
-              sortedProducts.map((product) => {
-                const status = getStockStatus(product.quantite_stock)
-                return (
-                  <TableRow key={product.id} className="border-border">
-                    <TableCell>
-                      <div className="relative h-12 w-12 rounded-md overflow-hidden bg-secondary">
-                        <Image
-                          src={product.image || "/placeholder.svg"}
-                          alt={product.nom}
-                          fill
-                          className="object-cover"
-                        />
+            </TableHeader>
+            <TableBody>
+              {sortedProducts.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-12">
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+                        <PackagePlus className="h-6 w-6 text-muted-foreground" />
                       </div>
-                    </TableCell>
-                    <TableCell className="font-medium">{product.nom}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="bg-secondary text-secondary-foreground">
-                        {product.categorie}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {product.quantite_stock < 5 && <AlertTriangle className="h-4 w-4 text-destructive" />}
-                        <span className={product.quantite_stock < 5 ? "text-destructive font-medium" : "font-medium"}>
-                          {product.quantite_stock} kg
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge variant={status.variant} className={status.color}>
-                        {status.label}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm" onClick={() => openRestockDialog(product.id)}>
-                        <PackagePlus className="mr-2 h-4 w-4" />
-                        Réapprovisionner
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                )
-              })
-            )}
-          </TableBody>
-        </Table>
+                      <p className="text-muted-foreground">Aucun produit disponible</p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                sortedProducts.map((product) => {
+                  const status = getStockStatus(product.quantite_stock)
+                  return (
+                    <TableRow key={product.id} className="border-border hover:bg-secondary/30 transition-colors">
+                      <TableCell>
+                        <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-secondary">
+                          <Image
+                            src={product.image || "/placeholder.svg"}
+                            alt={product.nom}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="font-medium">{product.nom}</div>
+                        <div className="md:hidden text-sm text-muted-foreground">
+                          <Badge variant={status.variant} className={status.color}>
+                            {status.label}
+                          </Badge>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        <Badge variant="secondary" className="bg-secondary/50">
+                          {product.categorie}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-medium">
+                        {product.quantite_stock} kg
+                      </TableCell>
+                      <TableCell className="text-center hidden sm:table-cell">
+                        <Badge variant={status.variant} className={status.color}>
+                          {status.label}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openRestockDialog(product.id)}
+                          className="gap-1"
+                        >
+                          <PackagePlus className="h-3.5 w-3.5" />
+                          <span className="hidden sm:inline">Réappro.</span>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       <Dialog open={restockDialogOpen} onOpenChange={setRestockDialogOpen}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Réapprovisionner le stock</DialogTitle>
-            <DialogDescription>Ajoutez du stock pour {selectedProduct?.nom}</DialogDescription>
+            <DialogDescription>
+              Ajoutez du stock pour <span className="font-medium">{selectedProduct?.nom}</span>
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label>Stock actuel</Label>
-              <div className="p-3 bg-secondary rounded-lg border border-border">
-                <span className="text-lg font-medium">{selectedProduct?.quantite_stock} kg</span>
+            <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+              <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-background">
+                <Image
+                  src={selectedProduct?.image || "/placeholder.svg"}
+                  alt={selectedProduct?.nom || ""}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-medium">{selectedProduct?.nom}</p>
+                <p className="text-sm text-muted-foreground">
+                  Stock actuel: <span className="font-medium">{selectedProduct?.quantite_stock} kg</span>
+                </p>
               </div>
             </div>
 
@@ -170,16 +195,16 @@ export function StockTable() {
                 placeholder="0.0"
                 min="0.1"
                 step="0.1"
-                className="bg-secondary border-border"
+                className="input-focus"
                 disabled={isLoading}
               />
             </div>
 
             {restockQuantity && Number(restockQuantity) > 0 && (
-              <div className="p-3 bg-accent rounded-lg border border-border">
+              <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Nouveau stock:</span>
-                  <span className="text-lg font-bold">
+                  <span className="text-lg font-bold text-primary">
                     {(selectedProduct?.quantite_stock || 0) + Number(restockQuantity)} kg
                   </span>
                 </div>
@@ -187,7 +212,7 @@ export function StockTable() {
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <Button
               variant="outline"
               onClick={() => {
@@ -202,7 +227,7 @@ export function StockTable() {
             </Button>
             <Button
               onClick={handleRestock}
-              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+              className="flex-1 bg-primary hover:bg-primary/90"
               disabled={isLoading || !restockQuantity || Number(restockQuantity) <= 0}
             >
               {isLoading ? (

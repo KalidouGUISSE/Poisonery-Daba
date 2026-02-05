@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Fish, Loader2 } from "lucide-react"
+import { Fish, Loader2, TrendingUp } from "lucide-react"
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -40,7 +40,7 @@ export default function LoginPage() {
           variant: "destructive",
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Erreur",
         description: "Une erreur est survenue lors de la connexion",
@@ -53,21 +53,38 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-8">
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="w-full max-w-md space-y-8 relative z-10">
+        {/* Logo et titre */}
         <div className="text-center space-y-2">
-          <div className="flex justify-center mb-4">
-            <div className="h-16 w-16 rounded-full bg-accent flex items-center justify-center">
-              <Fish className="h-8 w-8 text-accent-foreground" />
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20">
+                <Fish className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full border-4 border-background" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">Poissonnerie</h1>
-          <p className="text-muted-foreground text-lg">Système de gestion</p>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold gradient-text">PoissyShop</h1>
+            <p className="text-muted-foreground text-sm sm:text-base mt-1">
+              Système de gestion de poissonnerie
+            </p>
+          </div>
         </div>
 
-        <Card className="border-border">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Connexion</CardTitle>
-            <CardDescription>Entrez vos identifiants pour accéder à votre espace</CardDescription>
+        {/* Carte de connexion */}
+        <Card className="border-border/50 shadow-lg">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-xl sm:text-2xl text-center">Connexion</CardTitle>
+            <CardDescription className="text-center">
+              Entrez vos identifiants pour accéder à votre espace
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -81,7 +98,7 @@ export default function LoginPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="bg-secondary border-border"
+                  className="input-focus"
                 />
               </div>
               <div className="space-y-2">
@@ -94,12 +111,12 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="bg-secondary border-border"
+                  className="input-focus"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                className="w-full bg-primary hover:bg-primary/90 transition-all"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -113,19 +130,30 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <div className="mt-6 p-4 bg-secondary rounded-lg border border-border">
-              <p className="text-sm text-muted-foreground mb-2">Comptes de test :</p>
-              <div className="space-y-1 text-sm">
-                <p className="text-foreground">
-                  <span className="font-medium">Admin:</span> admin / admin123
-                </p>
-                <p className="text-foreground">
-                  <span className="font-medium">Vendeur:</span> vendeur1 / vendeur123
-                </p>
+            {/* Comptes de test */}
+            <div className="mt-6 p-4 bg-secondary/50 rounded-lg border border-border/50">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <p className="text-sm font-medium">Comptes de test</p>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="p-2 bg-background/50 rounded">
+                  <span className="text-muted-foreground block text-xs">Administrateur</span>
+                  <span className="font-mono font-medium">admin / admin123</span>
+                </div>
+                <div className="p-2 bg-background/50 rounded">
+                  <span className="text-muted-foreground block text-xs">Vendeur</span>
+                  <span className="font-mono font-medium">vendeur1 / vendeur123</span>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-muted-foreground">
+          © 2024 PoissyShop. Tous droits réservés.
+        </p>
       </div>
     </div>
   )

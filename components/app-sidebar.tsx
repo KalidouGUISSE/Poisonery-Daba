@@ -5,7 +5,19 @@ import { usePathname } from "next/navigation"
 import { useAuth } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, Fish, ShoppingCart, Package, User, LogOut } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  LayoutDashboard,
+  Fish,
+  ShoppingCart,
+  Package,
+  User,
+  LogOut,
+  Menu,
+  X,
+  TrendingUp,
+} from "lucide-react"
+import { useState } from "react"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["admin", "vendeur"] },
@@ -15,84 +27,114 @@ const navigation = [
   { name: "Vendeurs", href: "/vendeurs", icon: User, roles: ["admin"] },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({ className }: { className?: string }) {
   const pathname = usePathname()
   const { user, logout } = useAuth()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const filteredNavigation = navigation.filter((item) => user && item.roles.includes(user.role))
 
-  return (
-    <div className="flex h-full w-64 flex-col bg-gradient-to-b from-card to-card/95 border-r border-border shadow-lg">
-      <div className="flex h-16 items-center gap-3 border-b border-border/50 px-6 bg-gradient-to-r from-primary/5 to-accent/5">
-        <div className="relative">
-          <Fish className="h-7 w-7 text-primary" />
-          <div className="absolute -top-1 -right-1 h-3 w-3 bg-accent rounded-full animate-pulse"></div>
+  const NavContent = () => (
+    <>
+      {/* Logo et titre */}
+      <div className="flex items-center gap-3 h-16 px-4 border-b border-border/50">
+        <div className="relative flex-shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
+            <Fish className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-success rounded-full border-2 border-background"></div>
         </div>
-        <div>
-          <span className="text-lg font-bold gradient-text">Poissonnerie</span>
-          <p className="text-xs text-muted-foreground">Gestion Pro</p>
+        <div className="hidden sm:block">
+          <span className="text-lg font-bold gradient-text">PoissyShop</span>
+          <p className="text-xs text-muted-foreground -mt-1">Gestion Poissonnerie</p>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-2 p-4">
+      {/* Navigation */}
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {filteredNavigation.map((item) => {
           const isActive = pathname === item.href
           return (
             <Link
               key={item.name}
               href={item.href}
+              onClick={() => setMobileOpen(false)}
               className={cn(
-                "group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 relative overflow-hidden",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-gradient-to-r from-primary/10 to-accent/10 text-primary border border-primary/20 shadow-sm"
-                  : "text-muted-foreground hover:bg-gradient-to-r hover:from-secondary/50 hover:to-secondary/30 hover:text-foreground hover:scale-[1.02]",
+                  ? "bg-primary/10 text-primary shadow-sm"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
-              <div className={cn(
-                "relative z-10 flex items-center gap-3",
-                isActive && "text-primary"
-              )}>
-                <div className={cn(
-                  "p-1.5 rounded-lg transition-colors",
+              <div
+                className={cn(
+                  "p-1.5 rounded-md transition-colors",
                   isActive ? "bg-primary/10" : "group-hover:bg-accent/10"
-                )}>
-                  <item.icon className={cn(
-                    "h-4 w-4 transition-colors",
-                    isActive ? "text-primary" : "group-hover:text-accent-foreground"
-                  )} />
-                </div>
-                <span className="font-medium">{item.name}</span>
+                )}
+              >
+                <item.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
               </div>
+              <span className={cn("hidden sm:block", isActive && "font-semibold")}>{item.name}</span>
               {isActive && (
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl"></div>
+                <div className="absolute left-0 w-1 h-8 bg-primary rounded-r-full hidden sm:block" />
               )}
             </Link>
           )
         })}
       </nav>
 
-      <div className="border-t border-border/50 p-4 space-y-3 bg-gradient-to-t from-secondary/5 to-transparent">
-        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10">
-          <div className="relative">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-sm">
+      {/* Section utilisateur */}
+      <div className="p-3 border-t border-border/50 space-y-2">
+        <div className="flex items-center gap-3 px-2 py-2 rounded-lg bg-secondary/50">
+          <div className="relative flex-shrink-0">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <User className="h-4 w-4 text-primary-foreground" />
             </div>
-            <div className="absolute -bottom-1 -right-1 h-3 w-3 bg-green-500 rounded-full border-2 border-background"></div>
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-secondary" />
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold truncate text-foreground">{user?.nom}</p>
-            <p className="text-xs text-muted-foreground capitalize font-medium">{user?.role}</p>
+          <div className="flex-1 min-w-0 hidden sm:block">
+            <p className="text-sm font-medium truncate">{user?.nom}</p>
+            <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
           </div>
         </div>
         <Button
           variant="ghost"
-          className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-200 rounded-xl"
+          size="sm"
+          className="w-full justify-start gap-2 text-muted-foreground hover:text-destructive"
           onClick={logout}
         >
-          <LogOut className="mr-3 h-4 w-4" />
-          Déconnexion
+          <LogOut className="h-4 w-4" />
+          <span className="hidden sm:inline">Déconnexion</span>
         </Button>
       </div>
-    </div>
+    </>
+  )
+
+  return (
+    <>
+      {/* Bouton mobile - visible uniquement sur mobile */}
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+        <SheetTrigger asChild className="lg:hidden fixed top-4 left-4 z-50">
+          <Button variant="outline" size="icon" className="shadow-md bg-background">
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </SheetTrigger>
+
+        {/* Sheet mobile */}
+        <SheetContent side="left" className="w-72 p-0 bg-background flex flex-col">
+          <NavContent />
+        </SheetContent>
+      </Sheet>
+
+      {/* Sidebar desktop */}
+      <aside
+        className={cn(
+          "hidden lg:flex flex-col h-screen sticky top-0 bg-background border-r border-border shadow-sm",
+          className
+        )}
+      >
+        <NavContent />
+      </aside>
+    </>
   )
 }
