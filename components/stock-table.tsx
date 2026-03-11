@@ -6,18 +6,21 @@ import { useStore } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
-import { PackagePlus, AlertTriangle, Loader2 } from "lucide-react"
+import { PackagePlus, AlertTriangle, Loader2, Bell } from "lucide-react"
 
 export function StockTable() {
-  const { products, updateStock } = useStore()
+  const { products, updateStock, sendRestockNotification, clients } = useStore()
   const { toast } = useToast()
   const [restockDialogOpen, setRestockDialogOpen] = useState(false)
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
   const [restockQuantity, setRestockQuantity] = useState<string>("")
+  const [sendNotification, setSendNotification] = useState(true)
+  const [notificationType, setNotificationType] = useState<"all" | "cibles">("cibles")
   const [isLoading, setIsLoading] = useState(false)
 
   const selectedProduct = products.find((p) => p.id === selectedProductId)
@@ -38,14 +41,39 @@ export function StockTable() {
     setIsLoading(true)
 
     try {
-      updateStock(selectedProduct.id, quantity)
-      toast({
-        title: "Stock mis à jour",
-        description: `${quantity} kg ajouté au stock de ${selectedProduct.nom}`,
-      })
+      // Update stock first
+      await updateStock(selectedProduct.id, quantity)
+      
+      // Send notification if requested
+      if (sendNotification && selectedProduct) {
+        await sendRestockNotification(
+          [selectedProduct],
+          notificationType === "all",
+          notificationType === "cibles" ? undefined : undefined
+        )
+        
+        const targetCount = notificationType === "all" 
+          ? clients.filter(c => c.actif).length 
+          : clients.filter(c => c.actif && c.preferences.includes(selectedProduct.nom)).length
+        
+        toast({
+          title: "Stock mis à jour et notification envoyée",
+          description: notificationType === "all"
+            ? `${quantity} kg ajouté, notification envoyée à ${targetCount} clients`
+            : `${quantity} kg ajouté, notification envoyée à ${targetCount} clients ciblés`,
+        })
+      } else {
+        toast({
+          title: "Stock mis à jour",
+          description: `${quantity} kg ajouté au stock de ${selectedProduct.nom}`,
+        })
+      }
+      
       setRestockDialogOpen(false)
       setRestockQuantity("")
       setSelectedProductId(null)
+      setSendNotification(true)
+      setNotificationType("cibles")
     } catch {
       toast({
         title: "Erreur",
@@ -59,6 +87,9 @@ export function StockTable() {
 
   const openRestockDialog = (productId: number) => {
     setSelectedProductId(productId)
+    setRestockQuantity("")
+    setSendNotification(true)
+    setNotificationType("cibles")
     setRestockDialogOpen(true)
   }
 
@@ -75,6 +106,12 @@ export function StockTable() {
 
   // Sort products by stock quantity (lowest first)
   const sortedProducts = [...products].sort((a, b) => a.quantite_stock - b.quantite_stock)
+
+  // Get clients who would be interested in this product
+  const getTargetedClientsCount = () => {
+    if (!selectedProduct) return 0
+    return clients.filter(c => c.actif && c.preferences.includes(selectedProduct.nom)).length
+  }
 
   return (
     <>
@@ -205,11 +242,55 @@ export function StockTable() {
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Nouveau stock:</span>
                   <span className="text-lg font-bold text-primary">
-                    {(selectedProduct?.quantite_stock || 0) + Number(restockQuantity)} kg
+                    {Number(selectedProduct?.quantite_stock || 0) + Number(restockQuantity)} kg
                   </span>
                 </div>
               </div>
             )}
+
+            {/* Notification Section */}
+            <div className="border-t pt-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Checkbox
+                  id="send-notification"
+                  checked={sendNotification}
+                  onCheckedChange={(checked) => setSendNotification(checked as boolean)}
+                />
+                <Label htmlFor="send-notification" className="text-sm font-normal cursor-pointer flex items-center gap-2">
+                  <Bell className="h-4 w-4" />
+                  Envoyer une notification aux clients
+                </Label>
+              </div>
+
+              {sendNotification && (
+                <div className="ml-6 space-y-2">
+                  <div className="flex gap-2">
+                    <Button
+                      variant={notificationType === "cibles" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setNotificationType("cibles")}
+                      className="flex-1"
+                    >
+                      Clients ciblés
+                    </Button>
+                    <Button
+                      variant={notificationType === "all" ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setNotificationType("all")}
+                      className="flex-1"
+                    >
+                      Tous
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {notificationType === "cibles" 
+                      ? `${getTargetedClientsCount()} client(s) concerné(s) par ${selectedProduct?.nom}`
+                      : `${clients.filter(c => c.actif).length} client(s) au total`
+                    }
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex gap-3">
@@ -219,6 +300,7 @@ export function StockTable() {
                 setRestockDialogOpen(false)
                 setRestockQuantity("")
                 setSelectedProductId(null)
+                setSendNotification(true)
               }}
               className="flex-1"
               disabled={isLoading}

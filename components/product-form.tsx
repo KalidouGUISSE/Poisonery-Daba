@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useStore, useInitializeStore, type Product } from "@/lib/store"
+import { useStore, type Product } from "@/lib/store"
 import { useToast } from "@/hooks/use-toast"
 import { Plus, Loader2 } from "lucide-react"
 import { ERROR_MESSAGES } from "@/lib/error-messages"
@@ -42,9 +42,6 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
 
   const { addProduct, updateProduct } = useStore()
   const { toast } = useToast()
-
-  // Initialiser les données du store
-  useInitializeStore()
 
   const validateForm = () => {
     const errors: {[key: string]: string} = {}

@@ -1,127 +1,107 @@
-import * as React from 'react'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from 'lucide-react'
+"use client"
 
-import { cn } from '@/lib/utils'
-import { Button, buttonVariants } from '@/components/ui/button'
+import * as React from "react"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
+export interface PaginationProps {
+  currentPage: number
+  totalPages: number
+  totalItems: number
+  itemsPerPage: number
+  onPageChange: (page: number) => void
+  onItemsPerPageChange: (itemsPerPage: number) => void
+}
+
+export function Pagination({
+  currentPage,
+  totalPages,
+  totalItems,
+  itemsPerPage,
+  onPageChange,
+  onItemsPerPageChange,
+}: PaginationProps) {
+  const startItem = (currentPage - 1) * itemsPerPage + 1
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems)
+
   return (
-    <nav
-      role="navigation"
-      aria-label="pagination"
-      data-slot="pagination"
-      className={cn('mx-auto flex w-full justify-center', className)}
-      {...props}
-    />
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <span>
+          Affichage de {startItem} à {endItem} sur {totalItems} résultat{totalItems !== 1 ? 's' : ''}
+        </span>
+      </div>
+
+      <div className="flex items-center gap-4">
+        {/* Items per page selector */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Lignes par page:</span>
+          <Select
+            value={String(itemsPerPage)}
+            onValueChange={(value) => onItemsPerPageChange(Number(value))}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue placeholder={itemsPerPage} />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {[5, 10, 15, 20, 25].map((pageSize) => (
+                <SelectItem key={pageSize} value={String(pageSize)}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Page navigation */}
+        <div className="flex items-center gap-1">
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => onPageChange(1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronsLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+
+          <div className="flex items-center gap-1 mx-2">
+            <span className="text-sm font-medium">Page</span>
+            <span className="text-sm font-medium">{currentPage}</span>
+            <span className="text-sm font-medium">sur</span>
+            <span className="text-sm font-medium">{totalPages}</span>
+          </div>
+
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => onPageChange(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronsRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
   )
-}
-
-function PaginationContent({
-  className,
-  ...props
-}: React.ComponentProps<'ul'>) {
-  return (
-    <ul
-      data-slot="pagination-content"
-      className={cn('flex flex-row items-center gap-1', className)}
-      {...props}
-    />
-  )
-}
-
-function PaginationItem({ ...props }: React.ComponentProps<'li'>) {
-  return <li data-slot="pagination-item" {...props} />
-}
-
-type PaginationLinkProps = {
-  isActive?: boolean
-} & Pick<React.ComponentProps<typeof Button>, 'size'> &
-  React.ComponentProps<'a'>
-
-function PaginationLink({
-  className,
-  isActive,
-  size = 'icon',
-  ...props
-}: PaginationLinkProps) {
-  return (
-    <a
-      aria-current={isActive ? 'page' : undefined}
-      data-slot="pagination-link"
-      data-active={isActive}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? 'outline' : 'ghost',
-          size,
-        }),
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
-function PaginationPrevious({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) {
-  return (
-    <PaginationLink
-      aria-label="Go to previous page"
-      size="default"
-      className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
-      {...props}
-    >
-      <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
-    </PaginationLink>
-  )
-}
-
-function PaginationNext({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) {
-  return (
-    <PaginationLink
-      aria-label="Go to next page"
-      size="default"
-      className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
-      {...props}
-    >
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
-    </PaginationLink>
-  )
-}
-
-function PaginationEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<'span'>) {
-  return (
-    <span
-      aria-hidden
-      data-slot="pagination-ellipsis"
-      className={cn('flex size-9 items-center justify-center', className)}
-      {...props}
-    >
-      <MoreHorizontalIcon className="size-4" />
-      <span className="sr-only">More pages</span>
-    </span>
-  )
-}
-
-export {
-  Pagination,
-  PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
 }

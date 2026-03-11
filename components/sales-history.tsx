@@ -9,16 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { History, Search, Filter, Calendar, Clock, User, Package, DollarSign, Download } from "lucide-react"
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
-import { useStore, useInitializeStore } from "@/lib/store"
+import { useStore } from "@/lib/store"
 
 export function SalesHistory() {
   const { products, users, sales } = useStore()
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedSeller, setSelectedSeller] = useState<string>("all")
   const [selectedProduct, setSelectedProduct] = useState<string>("all")
-
-  // Initialiser les données du store
-  useInitializeStore()
 
   const getFilteredSales = useCallback(() => {
     if (!products.length || !users.length || !sales.length) return []

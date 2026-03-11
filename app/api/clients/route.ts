@@ -1,24 +1,9 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
-import { Product } from '@/lib/types'
+import { DataFile, Client, CreateClientDTO } from '@/lib/types'
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'data', 'data.json')
-
-interface DataFile {
-  metadata: {
-    version: string
-    created_at: string
-    description: string
-    tables: string[]
-  }
-  users: any[]
-  products: Product[]
-  sales: any[]
-  clients: any[]
-  notifications: any[]
-  migration_info: any
-}
 
 async function readDataFile(): Promise<DataFile> {
   try {
@@ -39,7 +24,7 @@ async function writeDataFile(data: DataFile): Promise<void> {
   }
 }
 
-// GET - Récupérer les produits avec pagination, tri et recherche
+// GET - Récupérer les clients avec pagination, tri et recherche
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -58,31 +43,28 @@ export async function GET(request: NextRequest) {
     const data = await readDataFile()
     
     // Filtrer par recherche
-    let filteredProducts = data.products
+    let filteredClients = data.clients
     
     if (search) {
       const searchLower = search.toLowerCase()
-      filteredProducts = filteredProducts.filter((product: Product) =>
-        product.nom.toLowerCase().includes(searchLower) ||
-        product.categorie.toLowerCase().includes(searchLower)
+      filteredClients = filteredClients.filter((client: Client) =>
+        client.nom.toLowerCase().includes(searchLower) ||
+        client.prenom.toLowerCase().includes(searchLower) ||
+        client.telephone.includes(search) ||
+        client.email.toLowerCase().includes(searchLower) ||
+        client.adresse.toLowerCase().includes(searchLower)
       )
     }
     
-    // Trier les produits
-    filteredProducts.sort((a: Product, b: Product) => {
-      let aVal: any = a[sortBy as keyof Product]
-      let bVal: any = b[sortBy as keyof Product]
+    // Trier les clients
+    filteredClients.sort((a: Client, b: Client) => {
+      let aVal: any = a[sortBy as keyof Client]
+      let bVal: any = b[sortBy as keyof Client]
       
       // Gérer les chaînes de caractères
       if (typeof aVal === 'string') {
         aVal = aVal.toLowerCase()
         bVal = bVal.toLowerCase()
-      }
-      
-      // Gérer les nombres
-      if (sortBy === 'prix_kg' || sortBy === 'quantite_stock') {
-        aVal = Number(aVal)
-        bVal = Number(bVal)
       }
       
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1
@@ -91,66 +73,75 @@ export async function GET(request: NextRequest) {
     })
     
     // Calculer la pagination
-    const totalProducts = filteredProducts.length
-    const totalPages = Math.ceil(totalProducts / limit)
+    const totalClients = filteredClients.length
+    const totalPages = Math.ceil(totalClients / limit)
     const startIndex = (page - 1) * limit
     const endIndex = startIndex + limit
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+    const paginatedClients = filteredClients.slice(startIndex, endIndex)
     
     return NextResponse.json({
-      products: paginatedProducts,
+      clients: paginatedClients,
       pagination: {
         page,
         limit,
-        totalProducts,
+        totalClients,
         totalPages,
         hasNextPage: page < totalPages,
         hasPrevPage: page > 1
       }
     })
   } catch (error) {
-    console.error('Erreur récupération produits:', error)
+    console.error('Erreur récupération clients:', error)
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des produits' },
+      { error: 'Erreur lors de la récupération des clients' },
       { status: 500 }
     )
   }
 }
 
-// POST - Ajouter un nouveau produit
+// POST - Ajouter un nouveau client
 export async function POST(request: NextRequest) {
   try {
-    const newProduct: Omit<Product, 'id'> = await request.json()
+    const newClient: CreateClientDTO = await request.json()
     const data = await readDataFile()
 
+    // Validation des champs requis
+    if (!newClient.nom || !newClient.prenom || !newClient.telephone) {
+      return NextResponse.json(
+        { error: 'Le nom, prénom et téléphone sont requis' },
+        { status: 400 }
+      )
+    }
+
     // Générer un nouvel ID
-    const newId = data.products.length > 0 
-      ? Math.max(...data.products.map(p => p.id), 0) + 1 
+    const newId = data.clients.length > 0 
+      ? Math.max(...data.clients.map(c => c.id), 0) + 1 
       : 1
 
-    // Créer le produit avec l'ID et les timestamps
-    const product: Product = {
-      ...newProduct,
+    // Créer le client avec l'ID et les timestamps
+    const client: Client = {
+      ...newClient,
       id: newId,
+      actif: newClient.actif ?? true,
+      preferences: newClient.preferences ?? [],
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
 
-    // Ajouter le produit à la liste
-    data.products.push(product)
+    // Ajouter le client à la liste
+    data.clients.push(client)
 
     // Mettre à jour les métadonnées
-    data.metadata.created_at = new Date().toISOString()
-    data.migration_info.total_products = data.products.length
+    data.migration_info.total_clients = data.clients.length
 
     // Sauvegarder le fichier
     await writeDataFile(data)
 
-    return NextResponse.json(product, { status: 201 })
+    return NextResponse.json(client, { status: 201 })
   } catch (error) {
-    console.error('Erreur lors de l\'ajout du produit:', error)
+    console.error('Erreur lors de l\'ajout du client:', error)
     return NextResponse.json(
-      { error: 'Erreur lors de l\'ajout du produit' },
+      { error: 'Erreur lors de l\'ajout du client' },
       { status: 500 }
     )
   }

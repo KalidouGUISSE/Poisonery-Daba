@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useStore, useInitializeStore } from "@/lib/store"
+import { useStore } from "@/lib/store"
 import { useAuth } from "@/lib/auth"
 import { useToast } from "@/hooks/use-toast"
 import { ERROR_MESSAGES } from "@/lib/error-messages"
@@ -22,9 +22,6 @@ export function SaleForm() {
   const { products, addSale, updateStock } = useStore()
   const { user } = useAuth()
   const { toast } = useToast()
-
-  // Initialiser les données du store
-  useInitializeStore()
 
   const selectedProduct = products.find((p) => p.id === Number(selectedProductId))
   const prixTotal = selectedProduct && poids ? selectedProduct.prix_kg * Number(poids) : 0

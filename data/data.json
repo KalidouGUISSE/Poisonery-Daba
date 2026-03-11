@@ -1,12 +1,14 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "created_at": "2026-02-05T16:02:24.043Z",
+    "created_at": "2026-02-05T17:10:14.453Z",
     "description": "Données de migration pour l'application de vente de poissons",
     "tables": [
       "users",
       "products",
-      "sales"
+      "sales",
+      "clients",
+      "notifications"
     ]
   },
   "users": [
@@ -124,6 +126,7 @@
       "created_at": "2025-10-09T17:06:19.177Z"
     },
     {
+      "id": 6,
       "produit_id": 3,
       "produit_nom": "Crevettes",
       "poids_kg": 10,
@@ -131,10 +134,10 @@
       "date_vente": "2025-10-09T18:33:16.366Z",
       "vendeur_id": 1,
       "vendeur_nom": "Administrateur",
-      "id": 6,
       "created_at": "2025-10-09T18:33:17.232Z"
     },
     {
+      "id": 7,
       "produit_id": 2,
       "produit_nom": "Dorade",
       "poids_kg": 2,
@@ -142,10 +145,10 @@
       "date_vente": "2026-02-05T15:25:39.731Z",
       "vendeur_id": 1,
       "vendeur_nom": "Administrateur",
-      "id": 7,
       "created_at": "2026-02-05T15:25:40.619Z"
     },
     {
+      "id": 8,
       "produit_id": 2,
       "produit_nom": "Dorade",
       "poids_kg": 12,
@@ -153,10 +156,10 @@
       "date_vente": "2026-02-05T16:01:26.377Z",
       "vendeur_id": 1,
       "vendeur_nom": "Administrateur",
-      "id": 8,
       "created_at": "2026-02-05T16:01:26.844Z"
     },
     {
+      "id": 9,
       "produit_id": 1,
       "produit_nom": "Thiof",
       "poids_kg": 29,
@@ -164,14 +167,112 @@
       "date_vente": "2026-02-05T16:02:23.828Z",
       "vendeur_id": 1,
       "vendeur_nom": "Administrateur",
-      "id": 9,
       "created_at": "2026-02-05T16:02:23.848Z"
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "nom": "Dupont",
+      "prenom": "Jean",
+      "telephone": "771234567",
+      "email": "jean.dupont@email.com",
+      "adresse": "12 Rue de la Paix, Dakar",
+      "preferences": [
+        "Saumon",
+        "Crevettes",
+        "Thiof"
+      ],
+      "actif": true,
+      "created_at": "2025-10-15T10:00:00.000Z",
+      "updated_at": "2026-03-11T15:46:18.639Z"
+    },
+    {
+      "id": 2,
+      "nom": "Martin",
+      "prenom": "Sophie",
+      "telephone": "772345678",
+      "email": "sophie.martin@email.com",
+      "adresse": "45 Avenue Pompidou, Dakar",
+      "preferences": [
+        "Dorade",
+        "Bar"
+      ],
+      "actif": true,
+      "created_at": "2025-11-01T14:30:00.000Z",
+      "updated_at": "2026-03-11T15:48:04.758Z"
+    },
+    {
+      "id": 3,
+      "nom": "Diallo",
+      "prenom": "Moussa",
+      "telephone": "773456789",
+      "email": "moussa.diallo@email.com",
+      "adresse": "8 Boulevard de l'Indépendance, Dakar",
+      "preferences": [
+        "Thiof",
+        "Dorade",
+        "Saumon",
+        "Crevettes"
+      ],
+      "actif": true,
+      "created_at": "2025-11-20T09:15:00.000Z",
+      "updated_at": "2025-11-20T09:15:00.000Z"
+    },
+    {
+      "nom": "Kane",
+      "prenom": "Bass",
+      "telephone": "783358786",
+      "email": "bass@gmail.com",
+      "adresse": "Keur cheikh",
+      "preferences": [
+        "Thiof",
+        "Saumon"
+      ],
+      "actif": true,
+      "id": 4,
+      "created_at": "2026-03-11T18:03:25.922Z",
+      "updated_at": "2026-03-11T18:03:38.231Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "restock",
+      "titre": "Nouveau stock disponible",
+      "message": "Nous avons reçu du nouveau poisson frais: Saumon, Crevettes",
+      "produits": [
+        "Saumon",
+        "Crevettes"
+      ],
+      "destinataires_type": "cibles",
+      "destinataires_ids": [
+        1,
+        3
+      ],
+      "envoye_par": "Administrateur",
+      "created_at": "2025-10-20T10:30:00.000Z",
+      "lu": false
+    },
+    {
+      "id": 2,
+      "type": "promotion",
+      "titre": "Offre spéciale weekend",
+      "message": "-20% sur tous les poissons frais ce weekend!",
+      "produits": [],
+      "destinataires_type": "all",
+      "destinataires_ids": [],
+      "envoye_par": "Administrateur",
+      "created_at": "2025-11-15T08:00:00.000Z",
+      "lu": true
     }
   ],
   "migration_info": {
     "total_users": 2,
     "total_products": 4,
     "total_sales": 9,
+    "total_clients": 4,
+    "total_notifications": 2,
     "estimated_migration_time": "2-3 minutes",
     "dependencies": [
       "Users table must be created first",

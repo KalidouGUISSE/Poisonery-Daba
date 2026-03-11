@@ -16,6 +16,8 @@ import {
   Menu,
   X,
   TrendingUp,
+  Users,
+  Bell,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -25,6 +27,7 @@ const navigation = [
   { name: "Ventes", href: "/ventes", icon: ShoppingCart, roles: ["admin", "vendeur"] },
   { name: "Stock", href: "/stock", icon: Package, roles: ["admin", "vendeur"] },
   { name: "Vendeurs", href: "/vendeurs", icon: User, roles: ["admin"] },
+  { name: "Clients", href: "/clients", icon: Users, roles: ["admin"] },
 ]
 
 export function AppSidebar({ className }: { className?: string }) {

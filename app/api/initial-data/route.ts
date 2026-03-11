@@ -12,7 +12,9 @@ export async function GET() {
     return NextResponse.json({
       products: data.products,
       users: data.users,
-      sales: data.sales
+      sales: data.sales,
+      clients: data.clients || [],
+      notifications: data.notifications || []
     })
   } catch (error) {
     console.error('Erreur lors de la lecture du fichier data.json:', error)
