@@ -37,24 +37,38 @@ async function writeDataFile(data: DataFile): Promise<void> {
   }
 }
 
-// POST - Ajouter une nouvelle vente
+// POST - Ajouter une nouvelle vente (plusieurs produits)
 export async function POST(request: NextRequest) {
   try {
-    const newSale = await request.json()
+    const body = await request.json()
     const data = await readDataFile()
 
-    // Générer un nouvel ID
-    const newId = Math.max(...data.sales.map((s: any) => s.id), 0) + 1
+    // Accepter soit un tableau de produits soit un seul produit
+    const products = Array.isArray(body.products) ? body.products : [body]
+    
+    const createdSales = []
+    
+    for (const product of products) {
+      // Générer un nouvel ID pour chaque vente
+      const newId = Math.max(...data.sales.map((s: any) => s.id), 0) + 1
 
-    // Créer la vente avec l'ID et les timestamps
-    const sale = {
-      ...newSale,
-      id: newId,
-      created_at: new Date().toISOString(),
+      // Créer la vente avec l'ID et les timestamps
+      const sale = {
+        produit_id: product.produit_id,
+        produit_nom: product.produit_nom,
+        poids_kg: product.poids_kg,
+        prix_total: product.prix_total,
+        date_vente: product.date_vente || new Date().toISOString(),
+        vendeur_id: product.vendeur_id,
+        vendeur_nom: product.vendeur_nom,
+        id: newId,
+        created_at: new Date().toISOString(),
+      }
+
+      // Ajouter la vente à la liste
+      data.sales.push(sale)
+      createdSales.push(sale)
     }
-
-    // Ajouter la vente à la liste
-    data.sales.push(sale)
 
     // Mettre à jour les métadonnées
     data.metadata.created_at = new Date().toISOString()
@@ -63,7 +77,11 @@ export async function POST(request: NextRequest) {
     // Sauvegarder le fichier
     await writeDataFile(data)
 
-    return NextResponse.json(sale, { status: 201 })
+    // Retourner un seul objet si un seul produit, sinon un tableau
+    return NextResponse.json(
+      createdSales.length === 1 ? createdSales[0] : createdSales,
+      { status: 201 }
+    )
   } catch (error) {
     console.error('Erreur lors de l\'ajout de la vente:', error)
     return NextResponse.json(

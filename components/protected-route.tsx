@@ -5,7 +5,7 @@ import type React from "react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth, type UserRole } from "@/lib/auth"
-import { useInitializeStore } from "@/lib/store"
+import { useStore } from "@/lib/store"
 import { Loader2 } from "lucide-react"
 
 interface ProtectedRouteProps {
@@ -17,8 +17,12 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
   const { user, isAuthenticated } = useAuth()
   const router = useRouter()
 
-  // Initialize store once when the user is authenticated
-  useInitializeStore()
+  // Initialize store once when the user is authenticated using useEffect
+  useEffect(() => {
+    if (isAuthenticated) {
+      useStore.getState().initializeData()
+    }
+  }, [isAuthenticated])
 
   useEffect(() => {
     if (!isAuthenticated) {

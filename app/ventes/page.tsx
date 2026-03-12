@@ -27,11 +27,11 @@ export default function VentesPage() {
 
           {/* Contenu */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              <div className="xl:col-span-1">
+            <div className="grid grid-cols-1 xl:grid-cols-7 gap-6">
+              <div className="xl:col-span-3">
                 <SaleForm />
               </div>
-              <div className="xl:col-span-2">
+              <div className="xl:col-span-4">
                 <SalesHistory />
               </div>
             </div>
