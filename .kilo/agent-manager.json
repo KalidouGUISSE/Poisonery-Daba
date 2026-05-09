@@ -1,0 +1,25 @@
+{
+  "worktrees": {
+    "wt-1778341624186-1": {
+      "branch": "quark-bangle",
+      "path": "/home/kalidou-guisse/Bureau/mes marche/Poissonnerie/.kilo/worktrees/quark-bangle",
+      "parentBranch": "main",
+      "createdAt": "2026-05-09T15:47:04.186Z",
+      "remote": "origin"
+    }
+  },
+  "sessions": {
+    "ses_1f2944594ffedfWIRjEcppoLRw": {
+      "worktreeId": "wt-1778341624186-1",
+      "createdAt": "2026-05-09T15:47:04.469Z"
+    }
+  },
+  "tabOrder": {
+    "local": [
+      "pending:1"
+    ]
+  },
+  "worktreeOrder": [
+    "wt-1778341624186-1"
+  ]
+}

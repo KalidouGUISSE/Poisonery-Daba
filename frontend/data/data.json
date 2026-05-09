@@ -1,0 +1,440 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "created_at": "2026-04-27T19:25:35.165Z",
+    "description": "Données de migration pour l'application de vente de poissons",
+    "tables": [
+      "users",
+      "products",
+      "sales",
+      "clients",
+      "notifications"
+    ]
+  },
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "role": "admin",
+      "nom": "Administrateur",
+      "created_at": "2025-10-09T15:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "username": "vendeur1",
+      "role": "vendeur",
+      "nom": "Vendeur 1",
+      "created_at": "2025-10-09T15:00:00.000Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "nom": "Thiof",
+      "categorie": "Poisson frais",
+      "prix_kg": 2500,
+      "quantite_stock": 1,
+      "image": "/fresh-thiof-fish.jpg",
+      "created_at": "2025-10-09T15:00:00.000Z",
+      "updated_at": "2026-02-05T16:02:24.043Z"
+    },
+    {
+      "id": 2,
+      "nom": "Dorade",
+      "categorie": "Poisson frais",
+      "prix_kg": 3000,
+      "quantite_stock": 0,
+      "image": "/fresh-sea-bream-fish.jpg",
+      "created_at": "2025-10-09T15:00:00.000Z",
+      "updated_at": "2026-04-27T19:25:35.165Z"
+    },
+    {
+      "id": 3,
+      "nom": "Crevettes",
+      "categorie": "Fruits de mer",
+      "prix_kg": 4500,
+      "quantite_stock": 12,
+      "image": "/fresh-shrimp.png",
+      "created_at": "2025-10-09T15:00:00.000Z",
+      "updated_at": "2026-03-12T13:37:37.725Z"
+    },
+    {
+      "id": 4,
+      "nom": "Saumon",
+      "categorie": "Poisson congelé",
+      "prix_kg": 5000,
+      "quantite_stock": 12,
+      "image": "/frozen-salmon-fish.jpg",
+      "created_at": "2025-10-09T15:00:00.000Z",
+      "updated_at": "2026-03-12T13:33:03.554Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "produit_id": 1,
+      "produit_nom": "Thiof",
+      "poids_kg": 2.5,
+      "prix_total": 6250,
+      "date_vente": "2025-10-09T10:30:00.000Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "created_at": "2025-10-09T10:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 1.8,
+      "prix_total": 5400,
+      "date_vente": "2025-10-09T11:15:00.000Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "created_at": "2025-10-09T11:15:00.000Z"
+    },
+    {
+      "id": 3,
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 1,
+      "prix_total": 4500,
+      "date_vente": "2025-10-09T14:20:00.000Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "created_at": "2025-10-09T14:20:00.000Z"
+    },
+    {
+      "id": 4,
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 12,
+      "prix_total": 36000,
+      "date_vente": "2025-10-09T17:02:38.121Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2025-10-09T17:02:39.098Z"
+    },
+    {
+      "id": 5,
+      "produit_id": 4,
+      "produit_nom": "Saumon",
+      "poids_kg": 3,
+      "prix_total": 15000,
+      "date_vente": "2025-10-09T17:06:19.131Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2025-10-09T17:06:19.177Z"
+    },
+    {
+      "id": 6,
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 10,
+      "prix_total": 45000,
+      "date_vente": "2025-10-09T18:33:16.366Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2025-10-09T18:33:17.232Z"
+    },
+    {
+      "id": 7,
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 2,
+      "prix_total": 6000,
+      "date_vente": "2026-02-05T15:25:39.731Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2026-02-05T15:25:40.619Z"
+    },
+    {
+      "id": 8,
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 12,
+      "prix_total": 36000,
+      "date_vente": "2026-02-05T16:01:26.377Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2026-02-05T16:01:26.844Z"
+    },
+    {
+      "id": 9,
+      "produit_id": 1,
+      "produit_nom": "Thiof",
+      "poids_kg": 29,
+      "prix_total": 72500,
+      "date_vente": "2026-02-05T16:02:23.828Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "created_at": "2026-02-05T16:02:23.848Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 1,
+      "prix_total": 3000,
+      "date_vente": "2026-03-12T13:24:26.676Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 10,
+      "created_at": "2026-03-12T13:24:27.878Z"
+    },
+    {
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 2,
+      "prix_total": 9000,
+      "date_vente": "2026-03-12T13:24:26.678Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 11,
+      "created_at": "2026-03-12T13:24:27.878Z"
+    },
+    {
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 2,
+      "prix_total": 9000,
+      "date_vente": "2026-03-12T13:25:34.670Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 12,
+      "created_at": "2026-03-12T13:25:34.697Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 3,
+      "prix_total": 9000,
+      "date_vente": "2026-03-12T13:25:34.670Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 13,
+      "created_at": "2026-03-12T13:25:34.697Z"
+    },
+    {
+      "produit_id": 4,
+      "produit_nom": "Saumon",
+      "poids_kg": 3,
+      "prix_total": 15000,
+      "date_vente": "2026-03-12T13:33:00.439Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 14,
+      "created_at": "2026-03-12T13:33:01.252Z"
+    },
+    {
+      "produit_id": 4,
+      "produit_nom": "Saumon",
+      "poids_kg": 3,
+      "prix_total": 15000,
+      "date_vente": "2026-03-12T13:33:00.439Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 15,
+      "created_at": "2026-03-12T13:33:01.573Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 4,
+      "prix_total": 12000,
+      "date_vente": "2026-03-12T13:34:24.330Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 16,
+      "created_at": "2026-03-12T13:34:24.359Z"
+    },
+    {
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 1,
+      "prix_total": 4500,
+      "date_vente": "2026-03-12T13:34:24.330Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 17,
+      "created_at": "2026-03-12T13:34:24.359Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 4,
+      "prix_total": 12000,
+      "date_vente": "2026-03-12T13:34:24.330Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 18,
+      "created_at": "2026-03-12T13:34:24.734Z"
+    },
+    {
+      "produit_id": 3,
+      "produit_nom": "Crevettes",
+      "poids_kg": 1,
+      "prix_total": 4500,
+      "date_vente": "2026-03-12T13:34:24.330Z",
+      "vendeur_id": 2,
+      "vendeur_nom": "Vendeur 1",
+      "id": 19,
+      "created_at": "2026-03-12T13:34:24.977Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 3,
+      "prix_total": 9000,
+      "date_vente": "2026-04-27T19:25:27.160Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 20,
+      "created_at": "2026-04-27T19:25:29.850Z"
+    },
+    {
+      "produit_id": 2,
+      "produit_nom": "Dorade",
+      "poids_kg": 3,
+      "prix_total": 9000,
+      "date_vente": "2026-04-27T19:25:27.160Z",
+      "vendeur_id": 1,
+      "vendeur_nom": "Administrateur",
+      "id": 21,
+      "created_at": "2026-04-27T19:25:30.006Z"
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "nom": "Dupont",
+      "prenom": "Jean",
+      "telephone": "771234567",
+      "email": "jean.dupont@email.com",
+      "adresse": "12 Rue de la Paix, Dakar",
+      "preferences": [
+        "Saumon",
+        "Crevettes",
+        "Thiof"
+      ],
+      "actif": true,
+      "created_at": "2025-10-15T10:00:00.000Z",
+      "updated_at": "2026-03-11T15:46:18.639Z"
+    },
+    {
+      "id": 2,
+      "nom": "Martin",
+      "prenom": "Sophie",
+      "telephone": "772345678",
+      "email": "sophie.martin@email.com",
+      "adresse": "45 Avenue Pompidou, Dakar",
+      "preferences": [
+        "Dorade",
+        "Bar"
+      ],
+      "actif": true,
+      "created_at": "2025-11-01T14:30:00.000Z",
+      "updated_at": "2026-03-11T15:48:04.758Z"
+    },
+    {
+      "id": 3,
+      "nom": "Diallo",
+      "prenom": "Moussa",
+      "telephone": "773456789",
+      "email": "moussa.diallo@email.com",
+      "adresse": "8 Boulevard de l'Indépendance, Dakar",
+      "preferences": [
+        "Thiof",
+        "Dorade",
+        "Saumon",
+        "Crevettes"
+      ],
+      "actif": true,
+      "created_at": "2025-11-20T09:15:00.000Z",
+      "updated_at": "2025-11-20T09:15:00.000Z"
+    },
+    {
+      "nom": "Kane",
+      "prenom": "Bass",
+      "telephone": "783358786",
+      "email": "bass@gmail.com",
+      "adresse": "Keur cheikh",
+      "preferences": [
+        "Thiof",
+        "Saumon"
+      ],
+      "actif": true,
+      "id": 4,
+      "created_at": "2026-03-11T18:03:25.922Z",
+      "updated_at": "2026-03-11T18:03:38.231Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "restock",
+      "titre": "Nouveau stock disponible",
+      "message": "Nous avons reçu du nouveau poisson frais: Saumon, Crevettes",
+      "produits": [
+        "Saumon",
+        "Crevettes"
+      ],
+      "destinataires_type": "cibles",
+      "destinataires_ids": [
+        1,
+        3
+      ],
+      "envoye_par": "Administrateur",
+      "created_at": "2025-10-20T10:30:00.000Z",
+      "lu": false
+    },
+    {
+      "id": 2,
+      "type": "promotion",
+      "titre": "Offre spéciale weekend",
+      "message": "-20% sur tous les poissons frais ce weekend!",
+      "produits": [],
+      "destinataires_type": "all",
+      "destinataires_ids": [],
+      "envoye_par": "Administrateur",
+      "created_at": "2025-11-15T08:00:00.000Z",
+      "lu": true
+    },
+    {
+      "id": 3,
+      "type": "restock",
+      "titre": "Nouveau stock disponible 🐟",
+      "message": "Nous avons réapprovisionné notre stock avec : Crevettes.Venez découvrir notre sélection fraîche!",
+      "produits": [
+        "Crevettes"
+      ],
+      "destinataires_type": "all",
+      "destinataires_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "envoye_par": "Administrateur",
+      "created_at": "2026-03-12T13:37:38.865Z",
+      "lu": false
+    }
+  ],
+  "migration_info": {
+    "total_users": 2,
+    "total_products": 4,
+    "total_sales": 21,
+    "total_clients": 4,
+    "total_notifications": 3,
+    "estimated_migration_time": "2-3 minutes",
+    "dependencies": [
+      "Users table must be created first",
+      "Products table must be created before Sales",
+      "Foreign key constraints should be handled carefully"
+    ],
+    "post_migration_steps": [
+      "Verify all records are migrated correctly",
+      "Update stock quantities based on sales",
+      "Set up proper indexes for performance",
+      "Configure backup strategy"
+    ]
+  }
+}

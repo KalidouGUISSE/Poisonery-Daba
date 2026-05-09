@@ -1,0 +1,112 @@
+// Prisma schema for PoissyShop - Fish Market Management System
+// Generated from existing Mongoose models
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Users model - Admin and Seller roles
+model User {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique @map("username") @db.VarChar(50)
+  password_hash String    @map("password_hash") @db.Text
+  role          UserRole  @default(vendeur) @map("role")
+  nom           String?   @map("nom") @db.VarChar(100)
+  created_at    DateTime  @default(now()) @map("created_at") @db.Timestamp
+  updated_at    DateTime  @updatedAt @map("updated_at") @db.Timestamp
+
+  // Relations
+  sales         Sale[]
+
+  @@map("users")
+}
+
+// Products model - Fish and seafood inventory
+model Product {
+  id             Int      @id @default(autoincrement())
+  nom            String   @map("nom") @db.VarChar(100)
+  categorie      String   @map("categorie") @db.VarChar(50)
+  prix_kg        Float    @map("prix_kg") @db.Real
+  quantite_stock Float    @default(0) @map("quantite_stock") @db.Real
+  image          String   @default("") @map("image") @db.Text
+  created_at     DateTime @default(now()) @map("created_at") @db.Timestamp
+  updated_at     DateTime @updatedAt @map("updated_at") @db.Timestamp
+
+  // Relations
+  sales          Sale[]
+
+  @@map("products")
+}
+
+// Sales model - Transaction records
+model Sale {
+  id            Int      @id @default(autoincrement())
+  produit_id    Int      @map("produit_id")
+  produit_nom   String   @map("produit_nom") @db.VarChar(100)
+  poids_kg      Float    @map("poids_kg") @db.Real
+  prix_total    Float    @map("prix_total") @db.Real
+  date_vente    DateTime @default(now()) @map("date_vente") @db.Timestamp
+  vendeur_id    Int      @map("vendeur_id")
+  vendeur_nom   String   @map("vendeur_nom") @db.VarChar(100)
+  created_at    DateTime @default(now()) @map("created_at") @db.Timestamp
+
+  // Relations
+  user          User     @relation(fields: [vendeur_id], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [produit_id], references: [id], onDelete: Cascade)
+
+  @@map("sales")
+}
+
+// Clients model - Customer management
+model Client {
+  id          Int       @id @default(autoincrement())
+  nom         String    @map("nom") @db.VarChar(50)
+  prenom      String    @map("prenom") @db.VarChar(50)
+  telephone   String    @map("telephone") @db.VarChar(20)
+  email       String    @default("") @map("email") @db.VarChar(100)
+  adresse     String    @default("") @map("adresse") @db.Text
+  preferences String[]  @default([]) @map("preferences")
+  actif       Boolean   @default(true) @map("actif")
+  created_at  DateTime  @default(now()) @map("created_at") @db.Timestamp
+  updated_at  DateTime  @updatedAt @map("updated_at") @db.Timestamp
+
+  @@map("clients")
+}
+
+// Notifications model - Communications and alerts
+model Notification {
+  id                Int             @id @default(autoincrement())
+  type              NotificationType @map("type")
+  titre             String          @map("titre") @db.VarChar(200)
+  message           String          @map("message") @db.Text
+  produits          String[]        @default([]) @map("produits")
+  destinataires_type DestinatairesType @default(all) @map("destinataires_type")
+  destinataires_ids Int[]           @default([]) @map("destinataires_ids")
+  envoye_par        String          @map("envoye_par") @db.VarChar(100)
+  created_at        DateTime        @default(now()) @map("created_at") @db.Timestamp
+  lu                Boolean         @default(false) @map("lu")
+
+  @@map("notifications")
+}
+
+// Enums
+enum UserRole {
+  admin
+  vendeur
+}
+
+enum NotificationType {
+  restock
+  promotion
+  manual
+}
+
+enum DestinatairesType {
+  all
+  cibles
+}

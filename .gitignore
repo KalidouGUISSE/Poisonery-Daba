@@ -1,0 +1,312 @@
+# ============================================
+# PoissyShop - GitIgnore Complet
+# ============================================
+# Projet: Gestion de poissonnerie fullstack
+# Stack: Next.js + Express + Prisma + PostgreSQL
+
+# ============================================
+# DEPENDANCES ET PACKAGES
+# ============================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# ============================================
+# FRAMEWORKS ET BUILD TOOLS
+# ============================================
+# Next.js
+.next/
+.next
+out/
+build/
+dist/
+
+# Nuxt.js
+.nuxt/
+.nitro/
+
+# Vite
+.vite/
+
+# Create React App
+build/
+.parcel-cache/
+
+# ============================================
+# BASES DE DONNEES
+# ============================================
+# PostgreSQL
+*.log
+*.pid
+*.gz
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# MongoDB
+*.log
+storage.db
+mongod.lock
+
+# Prisma
+# Garder le schéma mais ignorer les migrations générées
+# prisma/migrations/*/migration.sql
+
+# ============================================
+# ENVIRONNEMENT ET CONFIGURATION
+# ============================================
+# Fichiers d'environnement
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Variables d'environnement système
+.envrc
+
+# Configuration locale
+config/local.json
+config/local.js
+config/local.ts
+
+# ============================================
+# LOGS ET DEBUGGING
+# ============================================
+# Logs d'application
+logs/
+*.log
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Logs de développement
+debug.log
+debug-*.log
+
+# ============================================
+# CACHE ET FICHIERS TEMPORAIRES
+# ============================================
+# Cache Next.js
+.next/cache/
+.next/trace
+.next/static/chunks/
+.next/static/webpack/
+
+# Cache système
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Cache npm/yarn
+.npm/
+.yarn-integrity
+.yarn/cache/
+.yarn/unplugged/
+
+# ============================================
+# OUTILS DE DEVELOPPEMENT
+# ============================================
+# IDE et Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# VSCode
+.vscode/settings.json
+.vscode/launch.json
+
+# WebStorm
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================
+# TESTS ET COUVERTURE
+# ============================================
+# Tests
+coverage/
+.nyc_output/
+*.lcov
+
+# Jest
+jest.config.js.map
+
+# ============================================
+# DEPLOIEMENT ET PRODUCTION
+# ============================================
+# Vercel
+.vercel
+
+# Netlify
+.netlify/
+
+# Docker (optionnel - décommenter si nécessaire)
+# docker-compose.override.yml
+# .dockerignore
+
+# ============================================
+# SSL ET CERTIFICATS
+# ============================================
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# ============================================
+# FICHIERS SPECIFIQUES AU PROJET
+# ============================================
+# Captures d'écran (si elles changent souvent)
+# screenshots/
+
+# Fichiers de données de développement
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# ============================================
+# TYPESCRIPT
+# ============================================
+*.tsbuildinfo
+next-env.d.ts
+
+# ============================================
+# OS SPECIFIQUES
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# ARCHIVES ET COMPRESSION
+# ============================================
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ============================================
+# FICHIERS SENSIBLES
+# ============================================
+# Mots de passe et clés API
+secrets.json
+secrets.yml
+keys.json
+keys.yml
+
+# Données sensibles
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# ============================================
+# BACKUP ET SAUVEGARDES
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+*.swp
+*.swo
+
+# ============================================
+# FICHIERS GENERES
+# ============================================
+# Auto-généré
+auto-generated/
+generated/
+*.generated.*
+
+# Documentation générée
+docs/build/
+docs/.vuepress/dist/
+
+# ============================================
+# SPECIFIQUE AU PROJET POISSYSHOP
+# ============================================
+# Fichiers de développement local
+local-config.json
+dev-config.json
+
+# Base de données de développement
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs d'application
+app.log
+error.log
+combined.log
+
+# Cache d'application
+.cache/
+.tmp/
+temp/
